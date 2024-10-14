@@ -18,7 +18,7 @@ Default permissions for the plugin
 - `allow-update-one`
 - `allow-list-collections`
 
-## Permission Table 
+## Permission Table
 
 <table>
 <tr>

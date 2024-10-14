@@ -18,7 +18,7 @@ function App() {
       console.log(
         await invoke("plugin:polodb|open_database", {
           key: "test",
-          path: "/home/itec/test",
+          path: "./database_test_open",
         })
       );
       console.log(

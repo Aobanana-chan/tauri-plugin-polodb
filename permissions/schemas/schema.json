@@ -295,221 +295,159 @@
       "type": "string",
       "oneOf": [
         {
-          "description": "allow-close-database -> Enables the close_database command without any pre-configured scope.",
+          "description": "Enables the close_database command without any pre-configured scope.",
           "type": "string",
-          "enum": [
-            "allow-close-database"
-          ]
+          "const": "allow-close-database"
         },
         {
-          "description": "deny-close-database -> Denies the close_database command without any pre-configured scope.",
+          "description": "Denies the close_database command without any pre-configured scope.",
           "type": "string",
-          "enum": [
-            "deny-close-database"
-          ]
+          "const": "deny-close-database"
         },
         {
-          "description": "allow-delete -> Enables the delete command without any pre-configured scope.",
+          "description": "Enables the delete command without any pre-configured scope.",
           "type": "string",
-          "enum": [
-            "allow-delete"
-          ]
+          "const": "allow-delete"
         },
         {
-          "description": "deny-delete -> Denies the delete command without any pre-configured scope.",
+          "description": "Denies the delete command without any pre-configured scope.",
           "type": "string",
-          "enum": [
-            "deny-delete"
-          ]
+          "const": "deny-delete"
         },
         {
-          "description": "allow-delete-all -> Enables the delete_all command without any pre-configured scope.",
+          "description": "Enables the delete_all command without any pre-configured scope.",
           "type": "string",
-          "enum": [
-            "allow-delete-all"
-          ]
+          "const": "allow-delete-all"
         },
         {
-          "description": "deny-delete-all -> Denies the delete_all command without any pre-configured scope.",
+          "description": "Denies the delete_all command without any pre-configured scope.",
           "type": "string",
-          "enum": [
-            "deny-delete-all"
-          ]
+          "const": "deny-delete-all"
         },
         {
-          "description": "allow-delete-one -> Enables the delete_one command without any pre-configured scope.",
+          "description": "Enables the delete_one command without any pre-configured scope.",
           "type": "string",
-          "enum": [
-            "allow-delete-one"
-          ]
+          "const": "allow-delete-one"
         },
         {
-          "description": "deny-delete-one -> Denies the delete_one command without any pre-configured scope.",
+          "description": "Denies the delete_one command without any pre-configured scope.",
           "type": "string",
-          "enum": [
-            "deny-delete-one"
-          ]
+          "const": "deny-delete-one"
         },
         {
-          "description": "allow-find -> Enables the find command without any pre-configured scope.",
+          "description": "Enables the find command without any pre-configured scope.",
           "type": "string",
-          "enum": [
-            "allow-find"
-          ]
+          "const": "allow-find"
         },
         {
-          "description": "deny-find -> Denies the find command without any pre-configured scope.",
+          "description": "Denies the find command without any pre-configured scope.",
           "type": "string",
-          "enum": [
-            "deny-find"
-          ]
+          "const": "deny-find"
         },
         {
-          "description": "allow-find-all -> Enables the find_all command without any pre-configured scope.",
+          "description": "Enables the find_all command without any pre-configured scope.",
           "type": "string",
-          "enum": [
-            "allow-find-all"
-          ]
+          "const": "allow-find-all"
         },
         {
-          "description": "deny-find-all -> Denies the find_all command without any pre-configured scope.",
+          "description": "Denies the find_all command without any pre-configured scope.",
           "type": "string",
-          "enum": [
-            "deny-find-all"
-          ]
+          "const": "deny-find-all"
         },
         {
-          "description": "allow-find-one -> Enables the find_one command without any pre-configured scope.",
+          "description": "Enables the find_one command without any pre-configured scope.",
           "type": "string",
-          "enum": [
-            "allow-find-one"
-          ]
+          "const": "allow-find-one"
         },
         {
-          "description": "deny-find-one -> Denies the find_one command without any pre-configured scope.",
+          "description": "Denies the find_one command without any pre-configured scope.",
           "type": "string",
-          "enum": [
-            "deny-find-one"
-          ]
+          "const": "deny-find-one"
         },
         {
-          "description": "allow-insert -> Enables the insert command without any pre-configured scope.",
+          "description": "Enables the insert command without any pre-configured scope.",
           "type": "string",
-          "enum": [
-            "allow-insert"
-          ]
+          "const": "allow-insert"
         },
         {
-          "description": "deny-insert -> Denies the insert command without any pre-configured scope.",
+          "description": "Denies the insert command without any pre-configured scope.",
           "type": "string",
-          "enum": [
-            "deny-insert"
-          ]
+          "const": "deny-insert"
         },
         {
-          "description": "allow-insert-one -> Enables the insert_one command without any pre-configured scope.",
+          "description": "Enables the insert_one command without any pre-configured scope.",
           "type": "string",
-          "enum": [
-            "allow-insert-one"
-          ]
+          "const": "allow-insert-one"
         },
         {
-          "description": "deny-insert-one -> Denies the insert_one command without any pre-configured scope.",
+          "description": "Denies the insert_one command without any pre-configured scope.",
           "type": "string",
-          "enum": [
-            "deny-insert-one"
-          ]
+          "const": "deny-insert-one"
         },
         {
-          "description": "allow-list-collections -> Enables the list_collections command without any pre-configured scope.",
+          "description": "Enables the list_collections command without any pre-configured scope.",
           "type": "string",
-          "enum": [
-            "allow-list-collections"
-          ]
+          "const": "allow-list-collections"
         },
         {
-          "description": "deny-list-collections -> Denies the list_collections command without any pre-configured scope.",
+          "description": "Denies the list_collections command without any pre-configured scope.",
           "type": "string",
-          "enum": [
-            "deny-list-collections"
-          ]
+          "const": "deny-list-collections"
         },
         {
-          "description": "allow-list-databases -> Enables the list_databases command without any pre-configured scope.",
+          "description": "Enables the list_databases command without any pre-configured scope.",
           "type": "string",
-          "enum": [
-            "allow-list-databases"
-          ]
+          "const": "allow-list-databases"
         },
         {
-          "description": "deny-list-databases -> Denies the list_databases command without any pre-configured scope.",
+          "description": "Denies the list_databases command without any pre-configured scope.",
           "type": "string",
-          "enum": [
-            "deny-list-databases"
-          ]
+          "const": "deny-list-databases"
         },
         {
-          "description": "allow-open-database -> Enables the open_database command without any pre-configured scope.",
+          "description": "Enables the open_database command without any pre-configured scope.",
           "type": "string",
-          "enum": [
-            "allow-open-database"
-          ]
+          "const": "allow-open-database"
         },
         {
-          "description": "deny-open-database -> Denies the open_database command without any pre-configured scope.",
+          "description": "Denies the open_database command without any pre-configured scope.",
           "type": "string",
-          "enum": [
-            "deny-open-database"
-          ]
+          "const": "deny-open-database"
         },
         {
-          "description": "allow-update -> Enables the update command without any pre-configured scope.",
+          "description": "Enables the update command without any pre-configured scope.",
           "type": "string",
-          "enum": [
-            "allow-update"
-          ]
+          "const": "allow-update"
         },
         {
-          "description": "deny-update -> Denies the update command without any pre-configured scope.",
+          "description": "Denies the update command without any pre-configured scope.",
           "type": "string",
-          "enum": [
-            "deny-update"
-          ]
+          "const": "deny-update"
         },
         {
-          "description": "allow-update-all -> Enables the update_all command without any pre-configured scope.",
+          "description": "Enables the update_all command without any pre-configured scope.",
           "type": "string",
-          "enum": [
-            "allow-update-all"
-          ]
+          "const": "allow-update-all"
         },
         {
-          "description": "deny-update-all -> Denies the update_all command without any pre-configured scope.",
+          "description": "Denies the update_all command without any pre-configured scope.",
           "type": "string",
-          "enum": [
-            "deny-update-all"
-          ]
+          "const": "deny-update-all"
         },
         {
-          "description": "allow-update-one -> Enables the update_one command without any pre-configured scope.",
+          "description": "Enables the update_one command without any pre-configured scope.",
           "type": "string",
-          "enum": [
-            "allow-update-one"
-          ]
+          "const": "allow-update-one"
         },
         {
-          "description": "deny-update-one -> Denies the update_one command without any pre-configured scope.",
+          "description": "Denies the update_one command without any pre-configured scope.",
           "type": "string",
-          "enum": [
-            "deny-update-one"
-          ]
+          "const": "deny-update-one"
         },
         {
-          "description": "default -> Default permissions for the plugin",
+          "description": "Default permissions for the plugin",
           "type": "string",
-          "enum": [
-            "default"
-          ]
+          "const": "default"
         }
       ]
     }

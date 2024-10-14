@@ -1,3 +1,6 @@
+use std::sync::Arc;
+
+use polodb_core::Database;
 use tauri::{
     plugin::{Builder, TauriPlugin},
     Manager, Runtime,
@@ -31,7 +34,7 @@ impl<R: Runtime, T: Manager<R>> crate::PolodbExt<R> for T {
 }
 
 /// Initializes the plugin.
-pub fn init<R: Runtime>() -> TauriPlugin<R> {
+pub fn init<R: Runtime>(opened_databases: Option<Vec<(String, Arc<Database>)>>) -> TauriPlugin<R> {
     Builder::new("polodb")
         .invoke_handler(tauri::generate_handler![
             list_databases,
@@ -52,7 +55,7 @@ pub fn init<R: Runtime>() -> TauriPlugin<R> {
         ])
         .setup(|app, api| {
             #[cfg(desktop)]
-            let polodb = desktop::init(app, api).unwrap();
+            let polodb = desktop::init(app, api, opened_databases).unwrap();
             app.manage(polodb);
             Ok(())
         })

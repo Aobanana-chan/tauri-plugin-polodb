@@ -1,4 +1,6 @@
-use polodb_core::bson::{doc, to_document};
+use std::sync::Arc;
+
+use polodb_core::{bson::{doc, to_document}, Database};
 use serde::{de::DeserializeOwned, Serialize};
 use tauri::{plugin::PluginApi, AppHandle, Runtime};
 
@@ -7,10 +9,11 @@ use crate::daemon::messages::{CountSelect, PoloCommand, PoloManager};
 pub fn init<R: Runtime, C: DeserializeOwned>(
     app: &AppHandle<R>,
     _api: PluginApi<R, C>,
+    opened_databases: Option<Vec<(String, Arc<Database>)>>
 ) -> Result<Polodb<R>, ()> {
     Ok(Polodb {
         app: app.clone(),
-        api: PoloManager::new(),
+        api: PoloManager::new(opened_databases),
     })
 }
 

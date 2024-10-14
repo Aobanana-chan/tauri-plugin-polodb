@@ -1,7 +1,5 @@
 use std::{
-    collections::HashMap,
-    path::Path,
-    sync::{Arc, Mutex, MutexGuard},
+    collections::HashMap, path::Path,  sync::{Arc, Mutex, MutexGuard, Weak}, time
 };
 
 use polodb_core::{bson::Document, Collection, Database};
@@ -15,32 +13,32 @@ pub struct SerializedDatabase {
 
 pub struct PoloDatabase {
     pub key: String,
-    pub database: Database,
-    pub file: String,
+    pub database: Arc<Database>,
+    pub file: Option<String>,
 }
 
 impl PoloDatabase {
-    pub fn deserialize(serialized: SerializedDatabase) -> Result<Self, crate::Error> {
-        let db = Database::open_path(Path::new(serialized.file.as_str())).or_else(|e| {
-            Err(crate::Error::Io(format!(
-                "Failed to open {:?}: {:?}",
-                serialized.file.as_str(),
-                e
-            )))
-        })?;
-        Ok(PoloDatabase {
-            key: serialized.key,
-            database: db,
-            file: serialized.file,
-        })
-    }
+    // pub fn deserialize(serialized: SerializedDatabase) -> Result<Self, crate::Error> {
+    //     let db = Database::open_path(Path::new(serialized.file.as_str())).or_else(|e| {
+    //         Err(crate::Error::Io(format!(
+    //             "Failed to open {:?}: {:?}",
+    //             serialized.file.as_str(),
+    //             e
+    //         )))
+    //     })?;
+    //     Ok(PoloDatabase {
+    //         key: serialized.key,
+    //         database: db,
+    //         file: serialized.file,
+    //     })
+    // }
 
-    pub fn serialize(&self) -> SerializedDatabase {
-        SerializedDatabase {
-            key: self.key.clone(),
-            file: self.file.clone(),
-        }
-    }
+    // pub fn serialize(&self) -> SerializedDatabase {
+    //     SerializedDatabase {
+    //         key: self.key.clone(),
+    //         file: self.file.clone(),
+    //     }
+    // }
 
     pub fn collection<T: Serialize, S: AsRef<str>>(&self, name: S) -> Collection<T> {
         self.database.collection::<T>(name.as_ref())
@@ -63,7 +61,7 @@ pub mod messages {
     };
 
     use async_channel::{unbounded, Receiver, Sender};
-    use polodb_core::{bson::Document, options::UpdateOptions, CollectionT};
+    use polodb_core::{bson::Document, options::UpdateOptions, CollectionT, Database};
     use serde::{de::DeserializeOwned, Deserialize, Serialize};
     use serde_json::Value;
     use uuid::Uuid;
@@ -141,9 +139,9 @@ pub mod messages {
     }
 
     impl PoloManager {
-        fn daemon(rx: Receiver<PoloMessage>) -> () {
+        fn daemon(rx: Receiver<PoloMessage>, opened_databases: Option<Vec<(String, Arc<Database>)>>) -> () {
             #[allow(unused_variables, unused_mut)]
-            let mut daemon = PoloDaemon::new();
+            let mut daemon = PoloDaemon::new(opened_databases);
             loop {
                 if let Ok(msg) = rx.recv_blocking() {
                     let command = msg.clone().content;
@@ -319,9 +317,9 @@ pub mod messages {
             }
         }
 
-        pub fn new() -> Self {
+        pub fn new(opened_databases: Option<Vec<(String, Arc<Database>)>>) -> Self {
             let (tx, rx) = unbounded::<PoloMessage>();
-            let handle = spawn(move || PoloManager::daemon(rx));
+            let handle = spawn(move || PoloManager::daemon(rx, opened_databases));
             PoloManager {
                 handle: Arc::new(Mutex::new(handle)),
                 tx: tx.clone(),
@@ -394,10 +392,21 @@ pub struct PoloDaemon {
 }
 
 impl PoloDaemon {
-    pub fn new() -> Self {
-        PoloDaemon {
+    pub fn new(opened_databases: Option<Vec<(String, Arc<Database>)>>) -> Self {
+        let mut instance = PoloDaemon {
             databases: HashMap::new(),
+        };
+        if let Some(opened_databases) = opened_databases {
+            for (key, database) in opened_databases {
+                instance.databases.insert( key.clone(),
+                Arc::new(Mutex::new(PoloDatabase{
+                    key,
+                    database,
+                    file: None,
+                })));
+            }
         }
+        instance
     }
 
     pub fn get<K: AsRef<str>>(&self, key: K) -> Result<MutexGuard<'_, PoloDatabase>, crate::Error> {
@@ -429,8 +438,8 @@ impl PoloDaemon {
             key.as_ref().to_string(),
             Arc::new(Mutex::new(PoloDatabase {
                 key: key.as_ref().to_string(),
-                database: db,
-                file: path_string.clone(),
+                database: Arc::new(db) ,
+                file: Some(path_string.clone()),
             })),
         );
         Ok(())
