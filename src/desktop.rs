@@ -1,4 +1,4 @@
-use std::sync::Arc;
+use std::{fmt::Debug, sync::Arc};
 
 use polodb_core::{bson::{doc, to_document}, Database};
 use serde::{de::DeserializeOwned, Serialize};
@@ -24,7 +24,7 @@ pub struct Polodb<R: Runtime> {
 }
 
 impl<R: Runtime> Polodb<R> {
-    pub async fn call<T: Serialize + DeserializeOwned>(
+    pub async fn call<T: Serialize + DeserializeOwned + Debug>(
         &self,
         command: PoloCommand,
     ) -> Result<T, crate::Error> {
@@ -83,7 +83,7 @@ impl<R: Runtime> Polodb<R> {
     }
 
     pub async fn find<
-        Doc: Serialize + DeserializeOwned,
+        Doc: Serialize + DeserializeOwned + Debug,
         Query: Serialize + DeserializeOwned,
         Db: AsRef<str>,
         Coll: AsRef<str>,
@@ -105,7 +105,7 @@ impl<R: Runtime> Polodb<R> {
     }
 
     pub async fn find_sorted<
-        Doc: Serialize + DeserializeOwned,
+        Doc: Serialize + DeserializeOwned + Debug,
         Query: Serialize + DeserializeOwned,
         Sort: Serialize + DeserializeOwned,
         Db: AsRef<str>,
@@ -129,7 +129,7 @@ impl<R: Runtime> Polodb<R> {
     }
 
     pub async fn find_one<
-        Doc: Serialize + DeserializeOwned,
+        Doc: Serialize + DeserializeOwned + Debug,
         Query: Serialize + DeserializeOwned,
         Db: AsRef<str>,
         Coll: AsRef<str>,
@@ -150,7 +150,7 @@ impl<R: Runtime> Polodb<R> {
             .await
     }
 
-    pub async fn all<Doc: Serialize + DeserializeOwned, Db: AsRef<str>, Coll: AsRef<str>>(
+    pub async fn all<Doc: Serialize + DeserializeOwned + Debug, Db: AsRef<str>, Coll: AsRef<str>>(
         &self,
         database: Db,
         collection: Coll,
@@ -167,7 +167,7 @@ impl<R: Runtime> Polodb<R> {
     }
 
     pub async fn all_sorted<
-        Doc: Serialize + DeserializeOwned,
+        Doc: Serialize + DeserializeOwned + Debug,
         Sort: Serialize + DeserializeOwned,
         Db: AsRef<str>,
         Coll: AsRef<str>,

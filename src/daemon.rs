@@ -55,9 +55,7 @@ impl PoloDatabase {
 
 pub mod messages {
     use std::{
-        path::Path,
-        sync::{Arc, Mutex},
-        thread::{spawn, JoinHandle},
+        fmt::Debug, path::Path, sync::{Arc, Mutex}, thread::{spawn, JoinHandle}
     };
 
     use async_channel::{unbounded, Receiver, Sender};
@@ -326,7 +324,7 @@ pub mod messages {
             }
         }
 
-        pub async fn call<T: Serialize + DeserializeOwned>(
+        pub async fn call<T: Serialize + DeserializeOwned + Debug>(
             &self,
             command: PoloCommand,
         ) -> Result<T, crate::Error> {
@@ -346,9 +344,14 @@ pub mod messages {
             match rx.recv().await {
                 Ok(result) => match result {
                     Ok(v) => {
-                        serde_json::from_value::<T>(v).or(Err(crate::Error::SerializationError(
+                        dbg!(&v);
+                        let result = serde_json::from_value::<T>(v);
+                        dbg!(&result);
+                        let result = result.or(Err(crate::Error::SerializationError(
                             "Failed to deserialize reponse value".to_string(),
-                        )))
+                        )));
+                        dbg!(&result);
+                        return result;
                     }
                     Err(e) => Err(e),
                 },

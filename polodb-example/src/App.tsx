@@ -2,6 +2,8 @@ import { useState } from "react";
 import reactLogo from "./assets/react.svg";
 import { invoke } from "@tauri-apps/api/core";
 import "./App.css";
+import { Database } from "tauri-plugin-polodb-api";
+
 
 function App() {
   const [greetMsg, setGreetMsg] = useState("");
@@ -70,9 +72,30 @@ function App() {
         })
       );
       console.log(await invoke("plugin:polodb|list_databases"));
+      
+
+
     } catch (e) {
       console.log(e);
     }
+  }
+
+  async function run_api_test() {
+    try {
+      // API test
+      let apiDatabase = await Database.open("api_test_data_base", "./api_test_data_base")
+      let data: {bool: boolean, str: string, num: number} = {bool: true, str: "test", num: 1234567890}
+      let testCollection = apiDatabase?.collection<{bool: boolean, str: string, num: number}>("test")
+      testCollection?.insert(data)
+      let readData = await testCollection?.find_one({})
+      if(readData != data){
+        console.error("Data read from database does not match data written to database");
+      }
+      apiDatabase?.close()
+    } catch (error) {
+      console.log(error);
+    }
+
   }
 
   return (
@@ -111,6 +134,7 @@ function App() {
       <p>{greetMsg}</p>
 
       <button onClick={() => run_test()}>TEST</button>
+      <button onClick={() => run_api_test()}>API TEST</button>
     </div>
   );
 }
