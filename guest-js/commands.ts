@@ -106,8 +106,8 @@ export async function find_one<
     database: string,
     collection: string,
     query: Query
-): Promise<Result<Document>> {
-    return await exec<Document>("find_one", {
+): Promise<Result<Document[]>> {
+    return await exec<Document[]>("find_one", {
         database,
         collection,
         query,

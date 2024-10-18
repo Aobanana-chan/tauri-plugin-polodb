@@ -87,10 +87,7 @@ function App() {
       let data: {bool: boolean, str: string, num: number} = {bool: true, str: "test", num: 1234567890}
       let testCollection = apiDatabase?.collection<{bool: boolean, str: string, num: number}>("test")
       testCollection?.insert(data)
-      let readData = await testCollection?.find_one({})
-      if(readData != data){
-        console.error("Data read from database does not match data written to database");
-      }
+      console.log(await testCollection?.find_one({}));
       apiDatabase?.close()
     } catch (error) {
       console.log(error);

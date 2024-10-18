@@ -344,14 +344,9 @@ pub mod messages {
             match rx.recv().await {
                 Ok(result) => match result {
                     Ok(v) => {
-                        dbg!(&v);
-                        let result = serde_json::from_value::<T>(v);
-                        dbg!(&result);
-                        let result = result.or(Err(crate::Error::SerializationError(
+                        serde_json::from_value::<T>(v).or(Err(crate::Error::SerializationError(
                             "Failed to deserialize reponse value".to_string(),
-                        )));
-                        dbg!(&result);
-                        return result;
+                        )))
                     }
                     Err(e) => Err(e),
                 },
