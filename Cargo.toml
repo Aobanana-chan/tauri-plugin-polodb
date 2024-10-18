@@ -1,7 +1,7 @@
 [package]
 name = "tauri-plugin-polodb"
 version = "0.1.0"
-authors = [ "Dax Harris" ]
+authors = [ "Dax Harris", "Aobanana"]
 description = "A Tauri plugin to expose the PoloDB embedded database to applications"
 edition = "2021"
 rust-version = "1.71"

@@ -3,12 +3,10 @@ A Tauri plugin to expose the PoloDB embedded database to applications
 
 ## Installation
 
-To install the Rust plugin, run:
-
-```bash
-cargo add tauri-plugin-polodb
+To install the Rust plugin, add to Cargo.toml
 ```
-
+tauri-plugin-polodb = { git = "https://github.com/Aobanana-chan/tauri-plugin-polodb.git", branch = "dist"}
+```
 Then, load the plugin in your Tauri app as follows:
 
 ```rust
@@ -23,10 +21,10 @@ pub fn run() {
 
 Finally, install the JS client bindings:
 
-```bash
-yarn add tauri-plugin-polodb-api
+package.json:
 ```
-
+npm install git+https://github.com/Aobanana-chan/tauri-plugin-polodb.git#dist
+```
 ## Usage
 
 In the Rust backend, all the PoloDB APIs can be accessed through the `AppHandle` as follows:

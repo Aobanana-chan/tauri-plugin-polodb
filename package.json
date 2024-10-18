@@ -1,7 +1,7 @@
 {
     "name": "tauri-plugin-polodb-api",
     "version": "0.1.0",
-    "author": "Dax Harris",
+    "author": "Dax Harris & Aobanana",
     "description": "A Tauri plugin to expose the PoloDB embedded database to applications",
     "type": "module",
     "types": "./dist-js/index.d.ts",

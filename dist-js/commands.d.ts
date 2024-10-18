@@ -1,0 +1,16 @@
+import { Result } from "./types";
+export declare function list_databases(): Promise<Result<string[]>>;
+export declare function list_collections(database: string): Promise<Result<string[]>>;
+export declare function open_database(key: string, path: string): Promise<Result<string>>;
+export declare function close_database(key: string): Promise<Result<string>>;
+export declare function insert<T extends object = any>(database: string, collection: string, documents: T[]): Promise<Result<number>>;
+export declare function insert_one<T extends object = any>(database: string, collection: string, document: T): Promise<Result<number>>;
+export declare function find_many<Document extends object = any, Query extends object = any, Sorting extends object = any>(database: string, collection: string, query: Query, sorting?: Sorting | null): Promise<Result<Document[]>>;
+export declare function find_all<Document extends object = any, Sorting extends object = any>(database: string, collection: string, sorting?: Sorting | null): Promise<Result<Document[]>>;
+export declare function find_one<Document extends object = any, Query extends object = any>(database: string, collection: string, query: Query): Promise<Result<Document[]>>;
+export declare function delete_many<Query extends object = any>(database: string, collection: string, query: Query): Promise<Result<number>>;
+export declare function delete_all(database: string, collection: string): Promise<Result<number>>;
+export declare function delete_one<Query extends object = any>(database: string, collection: string, query: Query): Promise<Result<number>>;
+export declare function update_many<Query extends object = any, Update extends object = any>(database: string, collection: string, query: Query, update: Update, upsert?: boolean): Promise<Result<number>>;
+export declare function update_all<Update extends object = any>(database: string, collection: string, update: Update, upsert?: boolean): Promise<Result<number>>;
+export declare function update_one<Query extends object = any, Update extends object = any>(database: string, collection: string, query: Query, update: Update, upsert?: boolean): Promise<Result<number>>;
